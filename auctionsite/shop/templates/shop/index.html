@@ -1,0 +1,64 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'shop/warna.css' %}"></link>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    
+    
+    <title>Auction Web House</title>
+</head>
+<body>
+
+    {% block body %}
+
+
+    <div class="container">
+        <div class="row">
+            <!-- {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}  -->
+            {% for list in list_objects %}
+            <div class="col-md-3"><br><br><br>
+                <div class="card text-center" style="width: 18rem;">
+                    <h5 class="card-title"> {{list.title}}</h5>
+                    {% if list.image_url %}
+                        <img src='{{list.image_url}}' class="card-img-top">
+                    {% else %}
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <div class="card-text">{{list.desc}}</div><br>
+                        <div class="text-center"><strong>Starting Bid: </strong> {{ list.starting_bid }}</div>
+                    </div>
+                    <a href="{% url 'listing' list.id %}" class="card-link mx-auto">View Bid</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    {% endblock %}
+</body>
+</html>

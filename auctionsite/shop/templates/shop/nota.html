@@ -1,0 +1,66 @@
+
+
+<a href="{% url 'listing' %}" class="card-link mx-auto">View Bid</a>
+
+
+
+
+
+
+
+<!-- 
+<script type="text/javascript">
+    console.log('This is working');
+
+    if(localStorage.getItem('wishlist') == null){
+        var wishlist = {};
+    }
+    else{
+        wishlist = JSON.parse(localStorage.getItem('wishlist'));
+    } 
+
+
+    $(document).on('click','.atc',function(){
+        console.log("The wishlist button is clicked");
+        var wishlist_id = this.id.toString(); 
+        console.log(wishlist_id);
+        
+        if(wishlist[wishlist_id] != undefined){
+            quantity = wishlist[wishlist_id][0] + 1;
+            wishlist[wishlist_id][0] = quantity;
+
+        }
+        else{
+            quantity = 1;
+            name = document.getElementById('nm'+wishlist_id).innerHTML;
+            wishlist[wishlist_id] = [quantity,name];
+        }
+        console.log(wishlist);
+        localStorage.setItem('wishlist',JSON.stringify(wishlist));
+        document.getElementById('wishlist').innerHTML = "Wishlist(" + Object.keys(wishlist).length + ")";     
+
+    });
+
+    DisplayWish(wishlist);
+    function DisplayWish(wishlist)
+    {
+        var wishlist_string = "";
+        wishlist_string += "<h2>This is your cart</h2>";
+        var wishlist_index = 1;
+
+        //new code added
+        wishlistObject = JSON.parse(localStorage.getItem('wishlist'));
+
+        for(item in wishlistObject)
+        {
+            console.log(wishlistObject[item][0]);
+            console.log(wishlistObject[item][1]);
+            wishlist_string += wishlistObject[item][1] + "Qty: " + wishlistObject[item][0]+ "</br>";
+        }
+        wishlist_string += "<a href='/wishlist'> <button class='btn btn-warning' id='view'> View</button> </a>"
+        document.getElementById("wishlist").setAttribute('data-content',wishlist_string);
+        $('[data-toggle="popover"]').popover();
+
+    }
+
+</script> -->

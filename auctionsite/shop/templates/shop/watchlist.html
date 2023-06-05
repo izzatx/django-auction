@@ -1,0 +1,91 @@
+{% extends "shop/base.html" %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        {% if watchlist %}
+            {% for x in watchlist %}
+                <div class="col-md-3">
+                    <div class="card text-center product_data" style="width: 18rem;">
+                        <h5 class="card-title"> {{x.watchlist.title}}</h5>
+                        <img src='{{x.watchlist.image_url}}' class="card-img-top">
+                        <div class="card-body">
+                        <div class="card-text">{{x.watchlist.desc}}</div><br>
+                        <div class="text-center"><strong>Starting Bid: </strong> {{ x.watchlist.starting_bid }}</div>
+                        </div>
+                        <div class='row'>
+                            <div class="d-flex justify-content-center">
+                                <input type = hidden value ="{{x.watchlist_id}}" class="prod_id">
+                                <button class="btn btn-outline-primary "> <a style='text-decoration:None' href="{% url 'listing' x.id %}"> View Bid </a></button>
+                                <button class="btn btn-outline-danger delete-watchlist-item ">Remove item from watchlist</button>
+                            </div>
+                        </div>
+                                               
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <h1 class="text-center">Your watchlist is empty</h1>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+
+$(document).on('click','.delete-watchlist-item', function (e) {
+    e.preventDefault();
+    var product_id = $(this).closest('.product_data').find('.prod_id').val();
+    var token = $('input[name=csrfmiddlewaretoken]').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/delete-watchlist-item",
+        data: {
+            'product_id' : product_id,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (response) {
+            alertify.success(response.status),
+            location.reload()
+            
+        }
+    });
+
+});
+
+// $('.delete-watchlist-item').click(function (e) { 
+//     e.preventDefault();
+//     var product_id = $(this).closest('.product_data').find('.prod_id').val();
+//     var token = $('input[name=csrfmiddlewaretoken]').val();
+
+//     $.ajax({
+//         type: "POST",
+//         url: "/delete-watchlist-item",
+//         data: {
+//             'product_id' : product_id,
+//             csrfmiddlewaretoken: '{{ csrf_token }}',
+//         },
+//         success: function (response) {
+//             alertify.success(response.status)
+            
+//         }
+//     });
+
+
+
+// });
+
+
+
+
+</script>
+
+{% endblock script %}

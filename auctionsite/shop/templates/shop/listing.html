@@ -1,0 +1,101 @@
+{% extends "shop/base.html" %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mx-auto product_data" style="width: 25rem;">
+                <!-- <h5 id="nm{{list.id}}" class="card-title mx-auto">{{list.title}}</h5> -->
+                <div id="nm{{list.id}}" class="card-title mx-auto">{{list.title}}</div>
+                <img class="card-img-top" src="{{ list.image_url }}">
+                <div class="card-body">
+                  <p class="card-text">{{list.desc}}</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text text-center">Present Bid : {{latest_bid}}</div>
+                    <p class="card-text text-center">Seller name : {{list.user}}</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <form method="get" action ="{% url 'bid' %}" class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input type ="hidden" value ="{{list.id}}" class="prod_id">
+                                <input type="number" class="form-inline" name="bid_amount" placeholder="Bid Amount">
+                                <button type="submit" value ="{{list.id}}" name="place_bidid" class="btn btn-primary">Place Bid</button>
+                            </div>
+                        </form>
+                          <!-- <a href="#" class="card-link text-center">Add to Wish List </a> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
+                            <button id ="{{list.id}}" type="button" class="btn btn-primary btn-sm addToWishlist">Add to Watch List</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+a{
+    text-decoration: None;
+}
+
+.gmbar{
+    width:auto;
+    margin:  auto;
+    left : 10px;
+}
+.text{
+    text-align: center;
+    margin-left: 400px;
+    margin-right: 400px;
+}
+
+</style>
+
+
+{% endblock body %}
+
+
+{% block script %}
+
+<script type="text/javascript">
+
+$('.addToWishlist').click(function (e){
+    e.preventDefault();
+
+    var product_id = $(this).closest('.product_data').find('.prod_id').val();
+    var token = $('input[name=csrfmiddlewaretoken]').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/add-to-watchlist",
+        data: {
+            'product_id' : product_id,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (response) {
+            alertify.success(response.status)
+            
+        }
+    });
+
+});
+
+
+
+
+
+
+
+</script>
+
+
+
+{% endblock script %}
